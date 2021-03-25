@@ -1,0 +1,101 @@
+/*
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class HttpService {
+  Future<HttpServiceResponse> get(BuildContext context, String endpoint,
+      {showApiResponse = false}) async {
+    String url = "";
+    try {
+      Response response = await http.get(url + "/" + endpoint, headers: {
+      });
+      return validateResponse(context, response);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<HttpServiceResponse> post(
+      BuildContext context, String endpoint, Map<String, dynamic> data) async {
+    try {
+      String url = "";
+      Response response = await http
+          .post(url + "/" + endpoint, body: json.encode(data), headers: {
+      });
+      return validateResponse(context, response);
+    } catch (e) {
+      return HttpServiceResponse(
+          success: false,
+          message:"");
+    }
+  }
+
+  Future<HttpServiceResponse> put(
+      BuildContext context, String endpoint, Map<String, dynamic> data) async {
+    try {
+      String url ="";
+      Response response = await http
+          .put(url + "/" + endpoint, body: json.encode(data), headers: {
+      });
+      return validateResponse(context, response);
+    } catch (e) {
+      return HttpServiceResponse(
+          success: false,
+          message:
+              "Ha ocurrido un problema en la conexión. Vuelve a intentar más tarde.");
+    }
+  }
+
+  Future<HttpServiceResponse> validateResponse(
+      BuildContext context, Response response) async {
+    String message =
+        "Ha ocurrido un problema en la conexión. Vuelve a intentar más tarde.";
+    HttpServiceResponse httpServiceResponse;
+    switch (response.statusCode) {
+      case 200:
+      case 201:
+        httpServiceResponse = HttpServiceResponse(
+            success: true, message: response.body, body: response.body);
+        break;
+
+      case 500:
+        httpServiceResponse =
+            HttpServiceResponse(success: false, message: message);
+        break;
+
+
+      case 400:
+      case 404:
+      default:
+
+        httpServiceResponse =
+            HttpServiceResponse(success: false, message: message);
+    }
+
+    return httpServiceResponse;
+  }
+  }
+
+HttpService httpService = HttpService();
+
+class HttpServiceResponse {
+  bool success;
+  String message;
+  String body;
+
+  HttpServiceResponse({this.success, this.message, this.body});
+
+  HttpServiceResponse.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    message = json['message'];
+    body = json['body'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    data['message'] = this.message;
+    data['body'] = this.body;
+    return data;
+  }
+}*/

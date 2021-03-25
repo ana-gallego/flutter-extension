@@ -1,0 +1,958 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Contents = void 0;
+const description_files_1 = require("./description-files");
+/**
+ * Tdos los string con los contenidos de cada pagina
+ *  */
+class Contents {
+    /**
+     *
+     */
+    main() {
+        return `
+import './tools/routes.dart';
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Mision X',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        routes: routes.allRoutes);
+  }
+}
+    `;
+    }
+    /**
+     *
+     * @param fileName es el nombre del archivo .dart ej: edit-user
+     * @param pageName es el nombre que tomará el stateWidget se crea en base al nombre del archivo ej: EditUser
+     */
+    responsivePageContent(fileName, pageName) {
+        return `
+import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
+import './${fileName}-desktop-view.dart';
+import './${fileName}-mobile-view.dart';
+
+
+class ${pageName}Page extends StatelessWidget {
+
+@override
+Widget build(BuildContext context) {
+return ScreenTypeLayout(
+    mobile: ${pageName}MobileView(),
+    desktop: ${pageName}DesktopView(),
+  );
+}
+}
+  `;
+    }
+    /**
+     *
+     * @param fileName es el nombre del archivo .dart ej: edit-user
+     * @param pageName es el nombre que tomará el stateWidget se crea en base al nombre del archivo ej: EditUser
+     * @param viewType define si es una vista movil o escritorio (si es un proyeto web), o simple (si es un proyecto solo movil)
+     */
+    simplePageContent(fileName, pageName, viewType) {
+        let routeLine = (viewType !== "") ? "" : `static const route = '/${pageName}';`;
+        return `
+import 'package:flutter/material.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
+import './${fileName}-controller.dart';
+
+
+class ${pageName}${viewType}Page extends StatefulWidget {
+  ${routeLine}
+  @override
+  _${pageName}${viewType}PageState createState() => _${pageName}${viewType}PageState();
+}
+
+class _${pageName}${viewType}PageState extends StateMVC<${pageName}${viewType}Page> {
+  _${pageName}${viewType}PageState() : super(${pageName}Controller()) {
+    controller = ${pageName}Controller.con;
+  }
+
+  ${pageName}Controller controller;
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      appBar: AppBar(title: Text(controller.pageName)),
+      body: Container(
+        child: Center(
+          child: Text(controller.pageName+ "${viewType}"),
+        ),
+      ),
+    );
+    
+  }
+}
+        `;
+    }
+    /**
+     *
+     * @param name nombre del controller
+     */
+    controllerContent(name) {
+        return `
+import 'package:mvc_pattern/mvc_pattern.dart';
+
+class ${name}Controller extends ControllerMVC {
+
+factory ${name}Controller() {
+    _this = ${name}Controller._();
+    return _this;
+
+}
+static ${name}Controller _this;
+
+${name}Controller._();
+
+static ${name}Controller get con => _this;
+
+String pageName = '${name}';
+}
+            `;
+    }
+    loginPage() {
+        return `
+import 'package:flutter/material.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
+
+import './login-controller.dart';
+import '../../tools/tools.dart';
+import '../../widgets/buttons/buttons.dart';
+import '../../widgets/inputs/inputs.dart';
+
+class LoginPage extends StatefulWidget {
+  static const route = '/Login';
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends StateMVC<LoginPage> {
+  _LoginPageState() : super(LoginController()) {
+    controller = LoginController.con;
+  }
+
+  LoginController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+                margin: dimens.bottom(context, .1),
+                child: Text('MISIÓN X',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: dimens.fullWidth(context) * .1,
+                        fontWeight: FontWeight.bold))),
+            Container(
+              margin: dimens.all(context, .03),
+              padding: dimens.all(context, .05),
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: colors.textColor.withOpacity(.2),
+                        blurRadius: 20,
+                        spreadRadius: 3)
+                  ],
+                  color: Colors.white,
+                  borderRadius: dimens.borderRadiusContainer(15.0)),
+              child: Form(
+                key: controller.formKey,
+                child: Column(children: [
+                  EmailInput(onSaved: () {}, onChanged: () {}),
+                  Container(height: dimens.fullWidth(context) * .05),
+                  PasswordInput(onSaved: () {}, onChanged: () {}),
+                  Container(height: dimens.fullWidth(context) * .05),
+                  SimpleButton(
+                    color: colors.primaryColor,
+                    label: 'Login',
+                    onPressed: () => controller.validateForm(),
+                  )
+                ]),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+`;
+    }
+    loginController() {
+        return `
+import '../../src/home/home-page.dart';
+import 'package:flutter/material.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
+
+class LoginController extends ControllerMVC {
+  factory LoginController() {
+    _this = LoginController._();
+    return _this;
+  }
+  static LoginController _this;
+
+  LoginController._();
+
+  static LoginController get con => _this;
+  BuildContext context;
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      context = con.stateMVC.context;
+    });
+    super.initState();
+  }
+
+  final formKey = GlobalKey<FormState>();
+
+  validateForm() {
+    if (formKey.currentState.validate()) {
+      goToHome();
+    }
+  }
+
+  goToHome() {
+    Navigator.popAndPushNamed(context, HomePage.route);
+  }
+}
+    
+    `;
+    }
+    /**
+     * Clase constants
+     */
+    constants() {
+        return `  
+  ///  
+  /// ${description_files_1.descriptionFiles.CONSTANTS}
+  ///
+  
+  class Constants {
+    /// versión actual de la aplicación
+    final currentVersion = 100;
+
+  }
+  Constants constants = Constants();
+  `;
+    }
+    /**
+     * Clase colors
+     */
+    colors() {
+        return `
+  import 'package:flutter/material.dart';  
+  
+  ///  
+  /// ${description_files_1.descriptionFiles.COLORS}
+  ///
+  
+  class CustomColors {
+
+    final primaryColor = Color(0xFF0fa35f);
+    final textColor = Color(0xFF707070);
+
+  }
+  CustomColors colors = CustomColors();
+  `;
+    }
+    /**
+     * Clase dimens
+     */
+    dimens() {
+        return `
+  import 'package:flutter/material.dart';  
+  
+  ///  
+  /// ${description_files_1.descriptionFiles.DIMENS}
+  ///
+  
+  class Dimens {
+   
+    /// ancho total de la pantalla
+    fullWidth(BuildContext context) {
+      return MediaQuery.of(context).size.width;
+    }
+  
+    /// largo total de la pantalla
+    fullHeigth(BuildContext context) {
+      return MediaQuery.of(context).size.height;
+    }
+  
+    /// se puede utilizar en margin o padding de un widget toma como referencia el ancho de la pantalla
+    fromLTRB(BuildContext context, left, top, right, bottom) {
+      return EdgeInsets.fromLTRB(
+        fullWidth(context) * left,
+        fullWidth(context) * top,
+        fullWidth(context) * right,
+        fullWidth(context) * bottom,
+      );
+    }
+  
+    /// se puede utilizar en margin o padding de un widget toma como referencia el ancho de la pantalla
+    symetric(BuildContext context, horizontal, vertical) {
+      return EdgeInsets.symmetric(
+        vertical: fullWidth(context) * vertical,
+        horizontal: fullWidth(context) * horizontal,
+      );
+    }
+  
+    /// se puede utilizar en margin o padding de un widget toma como referencia el ancho de la pantalla
+    all(BuildContext context, value) {
+      return EdgeInsets.all(
+        fullWidth(context) * value,
+      );
+    }
+  
+    /// se puede utilizar en margin o padding de un widget toma como referencia el ancho de la pantalla
+    horizontal(BuildContext context, value) {
+      return EdgeInsets.symmetric(
+        horizontal: fullWidth(context) * value,
+      );
+    }
+  
+    /// se puede utilizar en margin o padding de un widget toma como referencia el ancho de la pantalla
+    vertical(BuildContext context, value) {
+      return EdgeInsets.symmetric(
+        vertical: fullWidth(context) * value,
+      );
+    }
+  
+    /// se puede utilizar en margin o padding de un widget toma como referencia el ancho de la pantalla
+    top(BuildContext context, value) {
+      return EdgeInsets.only(
+        top: fullWidth(context) * value,
+      );
+    }
+  
+    /// se puede utilizar en margin o padding de un widget toma como referencia el ancho de la pantalla
+    left(BuildContext context, value) {
+      return EdgeInsets.only(
+        left: fullWidth(context) * value,
+      );
+    }
+  
+    /// se puede utilizar en margin o padding de un widget toma como referencia el ancho de la pantalla
+    right(BuildContext context, value) {
+      return EdgeInsets.only(
+        right: fullWidth(context) * value,
+      );
+    }
+  
+    /// se puede utilizar en margin o padding de un widget toma como referencia el ancho de la pantalla
+    bottom(BuildContext context, value) {
+      return EdgeInsets.only(
+        bottom: fullWidth(context) * value,
+      );
+    }
+  
+    layoutPadding(BuildContext context) {
+      return EdgeInsets.fromLTRB(fullWidth(context) * .05,
+          fullWidth(context) * .05, fullWidth(context) * .05, 0);
+    }
+  
+    cardRaduis(BuildContext context) {
+      return borderRadius(15.0);
+    }
+  
+    borderRadius(radius) {
+      return RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(radius),
+      );
+    }
+  
+    borderRadiusContainer(radius) {
+      if (radius.runtimeType == int) {
+        radius = double.parse('$radius');
+      }
+      return BorderRadius.all(Radius.circular(radius));
+    }
+  }
+  Dimens dimens = Dimens();
+  `;
+    }
+    /**
+     * Clase dialogs
+     */
+    dialogs() {
+        return `
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';  
+import 'tools.dart'; 
+  
+  ///  
+  /// ${description_files_1.descriptionFiles.DIALOGS}
+  ///
+
+  class CustomDialogs{
+    
+    showMessageDialog(message, context, hasloading) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: dimens.borderRadius(10.0),
+            content: Text(message ?? ''),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  'ACEPTAR',
+                  style: TextStyle(color: colors.primaryColor),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      ).then((_) {
+        /// en caso de que tenga un loading lo cierro tambien
+        if (hasloading) {
+          Navigator.pop(context);
+        }
+      });
+    }
+  
+    showLoadingDialog(context) {
+      try {
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return AlertDialog(
+                  titlePadding: EdgeInsets.all(0),
+                  contentPadding: EdgeInsets.all(0),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  content: Container(
+                    alignment: Alignment.center,
+                  ));
+            });
+      } catch (e) {
+        print('No context for loader');
+        print(e);
+      }
+    }
+  
+    hideLoadingDialog(context) {
+      try {
+        Navigator.pop(context);
+      } catch (e) {
+        print('No context for loader');
+        print(e);
+      }
+    }
+  
+    showDinamicDialog(Function whenComplete, BuildContext context, bool dimisible,
+        Widget child) {
+      return showDialog(
+          context: context,
+          barrierDismissible: dimisible,
+          builder: (context) {
+            return AlertDialog(
+                titlePadding: EdgeInsets.all(0),
+                contentPadding: EdgeInsets.all(0),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                content: child);
+          }).whenComplete(() {
+        if (whenComplete != null) {
+          whenComplete();
+        }
+      });
+    }
+  
+  }
+
+  CustomDialogs customDialogs = CustomDialogs();
+  `;
+    }
+    /**
+     * Clase routes
+     */
+    routes() {
+        return `
+import '../src/home/home-page.dart';
+import '../src/login/login-page.dart';
+///  
+/// ${description_files_1.descriptionFiles.ROUTES}
+///
+class Routes {
+  final allRoutes = {
+    "/": (context) => LoginPage(),
+    HomePage.route: (context) => HomePage(),
+    LoginPage.route: (context) => LoginPage()
+  };
+}
+
+Routes routes = Routes();
+  `;
+    }
+    /**
+     * Clase validators
+     */
+    validators() {
+        return `
+  String validateEmail(String input) {
+    {
+      Pattern pattern =
+          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+      RegExp regex = new RegExp(pattern);
+      if (!regex.hasMatch(input.trim())) {
+        return 'Ingrese un correo electrónico válido';
+      } else
+        return null;
+    }
+  }
+
+  String noValidate() {
+    return null;
+  }
+
+  String validatePassword(input) {
+    if (input.trim().length < 6) {
+      return 'La contraseña debe tener mínimo 6 caracteres';
+    }
+
+    if (input.trim().length > 20) {
+      return 'La contraseña debe tener máximo 20 caracteres';
+    }
+
+    return null;
+  }
+
+  String validateText(input) {
+    if (input.trim() == "" || input.trim().length < 2)
+      return 'Este campo es obligatorio';
+    else
+      return null;
+  }
+
+  String validatePhone(input) {
+    String pattern = r'^(?:[+0][1-9])?[0-9]{7,20}$';
+    RegExp regExp = RegExp(pattern);
+
+    if (input.isNotEmpty && !regExp.hasMatch(input.trim())) {
+      return 'Ingrese un teléfono válido';
+    }
+    return null;
+  }
+
+  String validateDocument(input) {
+    String pattern = r'^[0-9]+$';
+    RegExp regExp = new RegExp(pattern);
+
+    if (input.trim().length < 6 || !regExp.hasMatch(input)) {
+      return 'Ingrese un documento válido';
+    } else {
+      return null;
+    }
+  }
+`;
+    }
+    /**
+     * Se exportan todos los archivos de la carpeta tools
+     */
+    imports() {
+        return `
+export  './colors.dart';
+export  './constants.dart';
+export  './dimens.dart';
+export  './dialogs.dart';
+export  './routes.dart';
+export  './validators.dart';
+  `;
+    }
+    /**
+     * Código base input tipo email
+     */
+    emailInput() {
+        return `
+import 'package:flutter/material.dart';
+import '../../tools/tools.dart';
+
+
+class EmailInput extends StatelessWidget {
+  final VoidCallback onChanged;
+  final VoidCallback onSaved;
+
+  const EmailInput({Key key, @required this.onChanged, @required this.onSaved})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+        validator: validateText,
+        onChanged: (x) => onChanged,
+        onSaved: (x) => onSaved,
+        style: TextStyle(color: colors.textColor, fontSize: 14),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: colors.textColor),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red[700]),
+          ),
+          focusColor: Colors.white,
+          hintText: "Email",
+          hintStyle: TextStyle(color: colors.textColor, fontSize: 14),
+        ));
+  }
+}  
+  `;
+    }
+    /**
+   * Código base input tipo contraseña
+   */
+    passwordInput() {
+        return `
+import 'package:flutter/material.dart';
+import '../../tools/tools.dart';
+class PasswordInput extends StatelessWidget {
+  final VoidCallback onChanged;
+  final VoidCallback onSaved;
+
+  const PasswordInput(
+      {Key key, @required this.onChanged, @required this.onSaved})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+        onChanged: (x) => onChanged,
+        onSaved: (x) => onSaved,
+        validator: validatePassword,
+        obscureText: true,
+        style: TextStyle(color: colors.textColor, fontSize: 14),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: colors.textColor),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red[700]),
+          ),
+          focusColor: Colors.white,
+          hintText: "Password",
+          hintStyle: TextStyle(color: colors.textColor, fontSize: 14),
+        ));
+  }
+}
+`;
+    }
+    /**
+   * Código base botón simple
+   */
+    simpleButton() {
+        return `
+import 'package:flutter/material.dart';
+import '../../tools/tools.dart';
+
+class SimpleButton extends StatelessWidget {
+  final String label;
+  final Color color;
+  final Color textColor;
+  final VoidCallback onPressed;
+
+  const SimpleButton({
+    Key key,
+    @required this.label,
+    @required this.onPressed,
+    this.color,
+    this.textColor = Colors.white,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+        minWidth: double.infinity,
+        height: dimens.fullWidth(context) * .12,
+        color: color ?? colors.primaryColor,
+        onPressed: () => onPressed(),
+        child: Text('Login', style: TextStyle(color: textColor)));
+  }
+}
+  `;
+    }
+    /**
+   * Se exportan todos los archivos de la carpeta form
+   */
+    inputs() {
+        return `
+export './email-input.dart';
+export './password-input.dart';
+    `;
+    }
+    /**
+   * Se exportan todos los archivos de la carpeta buttons
+   */
+    buttons() {
+        return `export './simple-button.dart';`;
+    }
+    /**
+     * SERVICESSSSS
+     */
+    firebaseService() {
+        return `/*
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+
+
+/// este servicio se comunica directamente con la base de datos, todos los llamados deben ser atravez de el
+class FirebaseService {
+  Firestore firestore = Firestore.instance;
+  final CloudFunctions functions =  CloudFunctions.instance;
+
+  Future<QuerySnapshot> getData(String documentId, String table) {
+    return firestore
+        .collection(table)
+        .where('id', isEqualTo: documentId)
+        .getDocuments();
+  }
+
+  Future<QuerySnapshot> getCollection(
+      String collection, String property, String equal) {
+    if (property != null) {
+      return firestore
+          .collection(collection)
+          .where(property, isEqualTo: equal)
+          .getDocuments();
+    } else {
+      return firestore.collection(collection).getDocuments();
+    }
+  }
+
+  Stream<QuerySnapshot> getCollectionSnapshot(String collection) {
+    return firestore.collection(collection).snapshots();
+  }
+
+  Stream<QuerySnapshot> getOrderedCollectionSnapshot(
+      String collection, property, bool desc) {
+    return firestore
+        .collection(collection)
+        .orderBy(property, descending: desc)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> getCollectionSnapshotQuery(
+      String collection, String property, String equal) {
+    return firestore
+        .collection(collection)
+        .where(property, isEqualTo: equal)
+        .snapshots();
+  }
+
+  Future save(Map<String, dynamic> document, String table) async {
+    String documentId = document['id'];
+
+    if (documentId != null) {
+      return firestore.collection(table).document(documentId).setData(document);
+    } else {
+      String id = createId(table);
+      return firestore
+          .collection(table)
+          .document(id)
+          .setData({'id': id, ...document});
+    }
+  }
+
+  Future updateDocument(documentID, data, table) {
+    return firestore.document('$table/$documentID').updateData(data);
+  }
+
+  createId(collection) {
+    CollectionReference collRef = Firestore.instance.collection(collection);
+    DocumentReference docReferance = collRef.document();
+    return docReferance.documentID;
+  }
+
+  deleteDocument(documentId, collection) {
+    return firestore.collection(collection).document(documentId)..delete();
+  }
+
+  Future<DocumentSnapshot> getDocument(documentId, collection) {
+    return firestore.collection(collection).document(documentId).get();
+  }
+}
+
+final FirebaseService firebaseService = FirebaseService();
+    */    `;
+    }
+    authService() {
+        return `
+/*import 'package:firebase_auth/firebase_auth.dart';
+
+/// este servicio será usado para manejar toda la autenticación y registro de los usuario
+
+class AuthService {
+  ///signIn
+  ///
+  ///This void tries to sign in a user with the given email and password.
+  Future<AuthResult> logIn(String email, String password) async {
+    return await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email.trim(), password: password.trim());
+  }
+
+  ///signUp
+  ///
+  ///This void creates a user with the given email and password.
+
+  Future<AuthResult> signUp(String email, String password) async {
+    return await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+  }
+
+  ///sendPasswordReset
+  ///
+  /// This void send a password-reset email to the given email
+  Future sendPasswordReset(String email) async {
+    return await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
+  ///getCurrentUser
+  ///
+  /// This void returns a string with the current logued user id
+  Future<FirebaseUser> getCurrentId() async {
+    return FirebaseAuth.instance.currentUser();
+  }
+
+  Future signOut() {
+    return FirebaseAuth.instance.signOut();
+  }
+}
+
+final AuthService auth = AuthService();
+*/
+    `;
+    }
+    httpService() {
+        return `/*
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class HttpService {
+  Future<HttpServiceResponse> get(BuildContext context, String endpoint,
+      {showApiResponse = false}) async {
+    String url = "";
+    try {
+      Response response = await http.get(url + "/" + endpoint, headers: {
+      });
+      return validateResponse(context, response);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<HttpServiceResponse> post(
+      BuildContext context, String endpoint, Map<String, dynamic> data) async {
+    try {
+      String url = "";
+      Response response = await http
+          .post(url + "/" + endpoint, body: json.encode(data), headers: {
+      });
+      return validateResponse(context, response);
+    } catch (e) {
+      return HttpServiceResponse(
+          success: false,
+          message:"");
+    }
+  }
+
+  Future<HttpServiceResponse> put(
+      BuildContext context, String endpoint, Map<String, dynamic> data) async {
+    try {
+      String url ="";
+      Response response = await http
+          .put(url + "/" + endpoint, body: json.encode(data), headers: {
+      });
+      return validateResponse(context, response);
+    } catch (e) {
+      return HttpServiceResponse(
+          success: false,
+          message:
+              "Ha ocurrido un problema en la conexión. Vuelve a intentar más tarde.");
+    }
+  }
+
+  Future<HttpServiceResponse> validateResponse(
+      BuildContext context, Response response) async {
+    String message =
+        "Ha ocurrido un problema en la conexión. Vuelve a intentar más tarde.";
+    HttpServiceResponse httpServiceResponse;
+    switch (response.statusCode) {
+      case 200:
+      case 201:
+        httpServiceResponse = HttpServiceResponse(
+            success: true, message: response.body, body: response.body);
+        break;
+
+      case 500:
+        httpServiceResponse =
+            HttpServiceResponse(success: false, message: message);
+        break;
+
+
+      case 400:
+      case 404:
+      default:
+
+        httpServiceResponse =
+            HttpServiceResponse(success: false, message: message);
+    }
+
+    return httpServiceResponse;
+  }
+  }
+
+HttpService httpService = HttpService();
+
+class HttpServiceResponse {
+  bool success;
+  String message;
+  String body;
+
+  HttpServiceResponse({this.success, this.message, this.body});
+
+  HttpServiceResponse.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    message = json['message'];
+    body = json['body'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    data['message'] = this.message;
+    data['body'] = this.body;
+    return data;
+  }
+}*/
+    
+    `;
+    }
+}
+exports.Contents = Contents;
+//# sourceMappingURL=contents.js.map

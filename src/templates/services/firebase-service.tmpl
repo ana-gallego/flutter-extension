@@ -1,0 +1,83 @@
+/*import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+
+
+/// este servicio se comunica directamente con la base de datos, todos los llamados deben ser atravez de el
+class FirebaseService {
+  Firestore firestore = Firestore.instance;
+  final CloudFunctions functions =  CloudFunctions.instance;
+
+  Future<QuerySnapshot> getData(String documentId, String table) {
+    return firestore
+        .collection(table)
+        .where('id', isEqualTo: documentId)
+        .getDocuments();
+  }
+
+  Future<QuerySnapshot> getCollection(
+      String collection, String property, String equal) {
+    if (property != null) {
+      return firestore
+          .collection(collection)
+          .where(property, isEqualTo: equal)
+          .getDocuments();
+    } else {
+      return firestore.collection(collection).getDocuments();
+    }
+  }
+
+  Stream<QuerySnapshot> getCollectionSnapshot(String collection) {
+    return firestore.collection(collection).snapshots();
+  }
+
+  Stream<QuerySnapshot> getOrderedCollectionSnapshot(
+      String collection, property, bool desc) {
+    return firestore
+        .collection(collection)
+        .orderBy(property, descending: desc)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> getCollectionSnapshotQuery(
+      String collection, String property, String equal) {
+    return firestore
+        .collection(collection)
+        .where(property, isEqualTo: equal)
+        .snapshots();
+  }
+
+  Future save(Map<String, dynamic> document, String table) async {
+    String documentId = document['id'];
+
+    if (documentId != null) {
+      return firestore.collection(table).document(documentId).setData(document);
+    } else {
+      String id = createId(table);
+      return firestore
+          .collection(table)
+          .document(id)
+          .setData({'id': id, ...document});
+    }
+  }
+
+  Future updateDocument(documentID, data, table) {
+    return firestore.document('$table/$documentID').updateData(data);
+  }
+
+  createId(collection) {
+    CollectionReference collRef = Firestore.instance.collection(collection);
+    DocumentReference docReferance = collRef.document();
+    return docReferance.documentID;
+  }
+
+  deleteDocument(documentId, collection) {
+    return firestore.collection(collection).document(documentId)..delete();
+  }
+
+  Future<DocumentSnapshot> getDocument(documentId, collection) {
+    return firestore.collection(collection).document(documentId).get();
+  }
+}
+
+final FirebaseService firebaseService = FirebaseService();
+    */

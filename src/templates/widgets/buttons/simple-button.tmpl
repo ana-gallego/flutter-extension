@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+import '../../tools/tools.dart';
+
+class SimpleButton extends StatelessWidget {
+  final String label;
+  final Color color;
+  final Color textColor;
+  final VoidCallback onPressed;
+
+  const SimpleButton({
+    Key key,
+    @required this.label,
+    @required this.onPressed,
+    this.color,
+    this.textColor = Colors.white,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+        minWidth: double.infinity,
+        height: dimens.fullWidth(context) * .12,
+        color: color ?? colors.primaryColor,
+        onPressed: () => onPressed(),
+        child: Text('Login', style: TextStyle(color: textColor)));
+  }
+}

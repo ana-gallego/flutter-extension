@@ -1,0 +1,91 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';  
+import 'tools.dart'; 
+
+///  
+/// ${descriptionFiles.DIALOGS}
+///
+
+class CustomDialogs{
+
+showMessageDialog(message, context, hasloading) {
+    showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+        return AlertDialog(
+        shape: dimens.borderRadius(10.0),
+        content: Text(message ?? ''),
+        actions: <Widget>[
+            FlatButton(
+            child: Text(
+                'ACEPTAR',
+                style: TextStyle(color: colors.primaryColor),
+            ),
+            onPressed: () {
+                Navigator.of(context).pop();
+            },
+            ),
+        ],
+        );
+    },
+    ).then((_) {
+    /// en caso de que tenga un loading lo cierro tambien
+    if (hasloading) {
+        Navigator.pop(context);
+    }
+    });
+}
+
+showLoadingDialog(context) {
+    try {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+            return AlertDialog(
+                titlePadding: EdgeInsets.all(0),
+                contentPadding: EdgeInsets.all(0),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                content: Container(
+                alignment: Alignment.center,
+                ));
+        });
+    } catch (e) {
+    print('No context for loader');
+    print(e);
+    }
+}
+
+hideLoadingDialog(context) {
+    try {
+    Navigator.pop(context);
+    } catch (e) {
+    print('No context for loader');
+    print(e);
+    }
+}
+
+showDinamicDialog(Function whenComplete, BuildContext context, bool dimisible,
+    Widget child) {
+    return showDialog(
+        context: context,
+        barrierDismissible: dimisible,
+        builder: (context) {
+        return AlertDialog(
+            titlePadding: EdgeInsets.all(0),
+            contentPadding: EdgeInsets.all(0),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            content: child);
+        }).whenComplete(() {
+    if (whenComplete != null) {
+        whenComplete();
+    }
+    });
+}
+
+}
+
+CustomDialogs customDialogs = CustomDialogs();

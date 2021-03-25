@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
+import './${fileName}-controller.dart';
+
+
+class ${pageName}${viewType}Page extends StatefulWidget {
+  ${routeLine}
+  @override
+  _${pageName}${viewType}PageState createState() => _${pageName}${viewType}PageState();
+}
+
+class _${pageName}${viewType}PageState extends StateMVC<${pageName}${viewType}Page> {
+  _${pageName}${viewType}PageState() : super(${pageName}Controller()) {
+    controller = ${pageName}Controller.con;
+  }
+
+  ${pageName}Controller controller;
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      appBar: AppBar(title: Text(controller.pageName)),
+      body: Container(
+        child: Center(
+          child: Text(controller.pageName+ "${viewType}"),
+        ),
+      ),
+    );
+    
+  }
+}

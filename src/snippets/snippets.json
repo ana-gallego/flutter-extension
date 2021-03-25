@@ -1,0 +1,102 @@
+{
+    "Create Provider": {
+        "prefix": "createprovider",
+        "body": [
+            "import 'package:flutter/material.dart';",
+            "",
+            "class ${1:}Provider extends ChangeNotifier {",
+            "",
+            "}"
+        ],
+        "description": "Nueva clase que extiende de ChangeNotifier"
+    },
+    "Create A class": {
+        "prefix": "cls",
+        "body": [
+            "",
+            "class ${1:} {",
+            "",
+            "}"
+        ],
+        "description": "Nueva clase"
+    },
+    "Insert Tools": {
+        "prefix": "inserte",
+        "body": [
+            "import '../../tools/tools.dart';"
+        ],
+        "description": "insertar tools"
+    },
+    "Insert Material": {
+        "prefix": "insertm",
+        "body": [
+            "import 'package:flutter/material.dart';"
+        ],
+        "description": "insertar import de material"
+    },
+    "Get Named Routes arguments": {
+        "prefix": "args",
+        "body": [
+            "dynamic args = ModalRoute.of(context).settings.arguments;",
+            "print(args);"
+        ],
+        "description": "se obtienen los argumentos pasados mediante route params y se asignan a una variable dinamica"
+    },
+    "Init State + Future Delayed": {
+        "prefix": "initstate",
+        "body": [
+            "@override",
+            "void initState() {",
+            "Future.delayed(Duration.zero, () {",
+            "",
+            "});",
+            "super.initState();",
+            " }"
+        ],
+        "description": "se crea un init state con un future delayed dentro"
+    },
+    "Generate a Future Delayed": {
+        "prefix": "fdelayed",
+        "body": [
+            "Future.delayed(Duration.zero,(){",
+            "",
+            "});"
+        ],
+        "description": "Inserta un future delayed con duration en zero"
+    },
+    "Generate a RichText": {
+        "prefix": "richText",
+        "body": [
+            "RichText(",
+            "text: TextSpan(",
+            " children: <TextSpan>[",
+            " TextSpan(text: 'Hello'),",
+            " TextSpan(text: ' world!'),",
+            " ],",
+            " ),",
+            " ),"
+        ],
+        "description": "Inserta un widget tipo RichText"
+    },
+    "Generate a User provider": {
+        "prefix": "userprovider",
+        "body": [
+            "User user = Provider.of<UserProvider>(context, listen: false).$0;"
+        ],
+        "description": "Retorna un la instancia de un objeto tipo user desde un user provider"
+    },
+    "Generate a provider instance": {
+        "prefix": "providerOf",
+        "body": [
+            "Provider.of<${1:MyType}>(context)$0"
+        ],
+        "description": "Obtiene una instancia de un provider"
+    },
+    "Generate a provider (no listener) instance": {
+        "prefix": "providerOfFalse",
+        "body": [
+            "Provider.of<${1:MyType}>(context, listen: false)$0"
+        ],
+        "description": "Obtiene una instancia de un provider listen changes"
+    }
+}
