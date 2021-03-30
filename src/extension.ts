@@ -42,43 +42,43 @@ export function activate(context: ExtensionContext) {
 	 * FILESSSSS
 	 */
 
-	var addFlutterFile = commands.registerCommand('extension.addFlutterFile', (args) => {
+	var addFlutterFile = commands.registerCommand('extension.addFlutterFile', (args: any) => {
 		const addFiles: AddFiles = new AddFiles();
 		addFiles.showFileNameDialog(args)
-			.then((path) => addFiles.createFolder(path))
-			.then((path) => addFiles.createFiles(path, 'simple'))
+			.then((path: any) => addFiles.createFolder(path))
+			.then((path: any) => addFiles.createFiles(path, 'simple'))
 			.then(addFiles.openPageInEditor)
-			.catch((err) => {
+			.catch((err: any) => {
 				if (err) {
 					window.showErrorMessage(err);
 				}
 			});
 	});
 
-	var addFlutterWebFile = commands.registerCommand('extension.addFlutterWebFile', (args) => {
+	var addFlutterWebFile = commands.registerCommand('extension.addFlutterWebFile', (args: any) => {
 		const addFiles: AddFiles = new AddFiles();
 		addFiles.showFileNameDialog(args)
-			.then((path) => addFiles.createFolder(path))
-			.then((path) => addFiles.createFiles(path, 'responsive'))
+			.then((path: any) => addFiles.createFolder(path))
+			.then((path: any) => addFiles.createFiles(path, 'responsive'))
 			.then(addFiles.openPageInEditor)
-			.catch((err) => {
+			.catch((err: any) => {
 				if (err) {
 					window.showErrorMessage(err);
 				}
 			});
 	});
 
-	var addFluterBaseProyect = commands.registerCommand('extension.addFluterBaseProyect', (args) => {
+	var addFluterBaseProyect = commands.registerCommand('extension.addFluterBaseProyect', (args: any) => {
 
 		const addFiles: AddFiles = new AddFiles();
 		addFiles.createFiles(args.fsPath, "main")
 		/// Se crea carpeta Extras
 		addFiles.createFolder(args.fsPath + "/tools")
-			.then((x) => {
+			.then((x: any) => {
 				addFiles.createFiles(x, 'extras');
 			})
 			/// Servicios
-			.then(() => addFiles.createFolder(args.fsPath + "/services").then((x) => {
+			.then(() => addFiles.createFolder(args.fsPath + "/services").then((x: any) => {
 
 				addFiles.createFiles(x, 'services');
 
@@ -89,12 +89,12 @@ export function activate(context: ExtensionContext) {
 			.then(() => addFiles.createFolder(args.fsPath + "/src")
 				.then(() => {
 					addFiles.createFolder(args.fsPath + "/src/home")
-						.then((x) => {
+						.then((x: any) => {
 							addFiles.createFiles(x, 'simple');
 						})
 						.then(() => {
 							addFiles.createFolder(args.fsPath + "/src/login")
-								.then((x) => {
+								.then((x: any) => {
 									addFiles.createFiles(x, 'login');
 								})
 						})
@@ -102,18 +102,18 @@ export function activate(context: ExtensionContext) {
 			/// Componentes reutilizables
 			.then(() => addFiles.createFolder(args.fsPath + "/widgets").then(() => {
 				// Form Inputs	
-				addFiles.createFolder(args.fsPath + "/widgets/inputs").then((x) => {
+				addFiles.createFolder(args.fsPath + "/widgets/inputs").then((x: any) => {
 					addFiles.createFiles(x, 'form');
 
 				});
 				// Buttons	
-				addFiles.createFolder(args.fsPath + "/widgets/buttons").then((x) => {
+				addFiles.createFolder(args.fsPath + "/widgets/buttons").then((x: any) => {
 					addFiles.createFiles(x, 'buttons');
 
 				});
 			}))
 
-			.catch((err) => {
+			.catch((err: any) => {
 				if (err) {
 					window.showErrorMessage(err);
 				}

@@ -33,14 +33,14 @@ export class AddFiles {
                 prompt: 'What\'s the name of the new folder?',
                 value: 'folder'
             }).then(
-                (fileName) => {
+                (fileName: any) => {
                     if (!fileName || /[~`!#$%\^&*+=\[\]\\';,/{}|\\":<>\?\s]/g.test(fileName)) {
                         deferred.reject('That\'s not a valid name! (no whitespaces or special characters)');
                     } else {
                         deferred.resolve(path.join(newFolderPath, fileName));
                     }
                 },
-                (error) => console.error(error)
+                (error: any) => console.error(error)
             );
         }
         return deferred.promise;
@@ -131,9 +131,9 @@ export class AddFiles {
         const deferred: Q.Deferred<TextEditor> = Q.defer<TextEditor>();
         var inputName: string = path.parse(folderName).name;
 
-        workspace.openTextDocument(path.join(folderName, `${inputName}-page.dart`)).then((textDocument) => {
+        workspace.openTextDocument(path.join(folderName, `${inputName}-page.dart`)).then((textDocument: any) => {
             if (!textDocument) { return; }
-            window.showTextDocument(textDocument).then((editor) => {
+            window.showTextDocument(textDocument).then((editor: any) => {
                 if (!editor) { return; }
                 deferred.resolve(editor);
             });
