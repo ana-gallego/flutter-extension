@@ -37,7 +37,7 @@ Paquetes que se usarán dentro de los archivos generados:
 | `providerOf`      | Obtiene una instancia de un provider                                                          |
 | `providerOfFalse` | Obtiene una instancia de un provider sin listen changes                                       |
 
-[!Snippets demo](https://img.youtube.com/vi/nI7Q8Lx5jjA/0.jpg)](http://www.youtube.com/watch?v=--b-9HrKK6w)
+[![Snippets demo](https://img.youtube.com/vi/GqlCnLL_K-M/0.jpg)](http://www.youtube.com/watch?v=GqlCnLL_K-M)
 
 - Wrapers:
   Inspirado en: [widget-wrap](https://marketplace.visualstudio.com/items?itemName=bradgashler.htmltagwrap)
