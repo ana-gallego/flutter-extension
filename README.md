@@ -13,9 +13,9 @@ Paquetes que se usarán dentro de los archivos generados:
 
 ## Release Notes
 
-Se añaden wrappers
+-Se agregan los servicios http, firebase y auth
 
-### 0.0.6
+### 0.0.7
 
 - Crear un proyecto base
 
