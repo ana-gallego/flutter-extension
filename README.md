@@ -20,7 +20,7 @@ Se añaden wrappers
 * Crear un proyecto base
 
 [Proyecto base demo](https://www.youtube.com/watch?v=nI7Q8Lx5jjA)
-[![Alt text for your video](https://img.youtube.com/vi/VIDEO-ID/0.jpg)](https://www.youtube.com/watch?v=nI7Q8Lx5jjA&ab_channel=AnaMaria)
+[![Alt text for your video](https://img.youtube.com/vi/nI7Q8Lx5jjA/0.jpg)](https://www.youtube.com/watch?v=nI7Q8Lx5jjA&ab_channel=AnaMaria)
 
 
 
