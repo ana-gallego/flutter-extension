@@ -19,7 +19,7 @@ Paquetes que se usarán dentro de los archivos generados:
 
 - Crear un proyecto base
 
-[![Proyecto base demo](https://img.youtube.com/vi/nI7Q8Lx5jjA/0.jpg)](http://www.youtube.com/watch?v=--b-9HrKK6w)
+[![Proyecto base demo](https://img.youtube.com/vi/nI7Q8Lx5jjA/0.jpg)](http://www.youtube.com/watch?v=nI7Q8Lx5jjA)
 
 - Snippets:
 
