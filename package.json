@@ -1,164 +1,167 @@
 {
-    "name": "mvc-pattern-snippets-wrappers",
-    "displayName": "mvc_pattern generator",
-    "description": "Extensión Flutter para desarrollo con patron mvc_pattern & snippets",
-    "version": "0.0.7",
-    "publisher": "Anagalleg0",
-    "engines": {
-        "vscode": "^1.50.0"
-    },
-    "categories": [
-        "Other"
+  "name": "mvc-pattern-snippets-wrappers",
+  "displayName": "Flutter mvc_pattern generator",
+  "description": "Extensión para desarrollo en flutter con patron mvc_pattern",
+  "version": "0.0.7",
+  "publisher": "Anagalleg0",
+  "engines": {
+    "vscode": "^1.50.0"
+  },
+  "keywords": [
+    "Flutter",
+    "Dart",
+    "mvc_pattern",
+    "Templates"
+  ],
+  "categories": [
+    "Other",
+    "Programming Languages",
+    "Snippets"
+  ],
+  "activationEvents": [
+    "*",
+    "onCommand:extension.wrapInContainer",
+    "onCommand:extension.wrapInStack",
+    "onCommand:extension.wrapInColumn",
+    "onCommand:extension.wrapInRow",
+    "onCommand:extension.wrapInListView",
+    "onCommand:extension.wrapInPositioned",
+    "onCommand:extension.wrapInExpanded",
+    "onCommand:extension.wrapInText"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.addFlutterFile",
+        "title": "Add Flutter File"
+      },
+      {
+        "command": "extension.addFlutterWebFile",
+        "title": "Add Flutter Web File"
+      },
+      {
+        "command": "extension.addFluterBaseProyect",
+        "title": "Add Base App"
+      },
+      {
+        "command": "extension.wrapInContainer",
+        "title": "Wrap in Container"
+      },
+      {
+        "command": "extension.wrapInStack",
+        "title": "Wrap in Stack"
+      },
+      {
+        "command": "extension.wrapInColumn",
+        "title": "Wrap in Column"
+      },
+      {
+        "command": "extension.wrapInListView",
+        "title": "Wrap in ListView"
+      },
+      {
+        "command": "extension.wrapInPositioned",
+        "title": "Wrap in Positioned"
+      },
+      {
+        "command": "extension.wrapInExpanded",
+        "title": "Wrap in Expanded"
+      },
+      {
+        "command": "extension.wrapInText",
+        "title": "Wrap in Text"
+      }
     ],
-    "activationEvents": [
-        "*",
-        "onCommand:extension.wrapInContainer",
-        "onCommand:extension.wrapInStack",
-        "onCommand:extension.wrapInColumn",
-        "onCommand:extension.wrapInRow",
-        "onCommand:extension.wrapInListView",
-        "onCommand:extension.wrapInPositioned",
-        "onCommand:extension.wrapInExpanded",
-        "onCommand:extension.wrapInText"
-    ],
-    "main": "./out/extension.js",
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.addFlutterFile",
-                "title": "Add Flutter File"
-            },
-            {
-                "command": "extension.addFlutterWebFile",
-                "title": "Add Flutter Web File"
-            },
-            {
-                "command": "extension.addFluterBaseProyect",
-                "title": "Add Base App"
-            },
-            {
-                "command": "extension.wrapInContainer",
-                "title": "Wrap in Container"
-            },
-            {
-                "command": "extension.wrapInStack",
-                "title": "Wrap in Stack"
-            },
-            {
-                "command": "extension.wrapInColumn",
-                "title": "Wrap in Column"
-            },
-            {
-                "command": "extension.wrapInListView",
-                "title": "Wrap in ListView"
-            },
-            {
-                "command": "extension.wrapInPositioned",
-                "title": "Wrap in Positioned"
-            },
-            {
-                "command": "extension.wrapInExpanded",
-                "title": "Wrap in Expanded"
-            },
-            {
-                "command": "extension.wrapInText",
-                "title": "Wrap in Text"
-            }
-        ],
-        "menus": {
-            "explorer/context": [
-                {
-                    "command": "extension.addFlutterFile"
-                },
-                {
-                    "command": "extension.addFlutterWebFile"
-                },
-                {
-                    "command": "extension.addFluterBaseProyect"
-                }
-            ]
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "extension.addFlutterFile"
         },
-        "keybindings": [
-            {
-                "command": "extension.wrapInContainer",
-                "key": "alt+c",
-                "mac": "alt+c",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "extension.wrapInStack",
-                "key": "alt+s",
-                "mac": "alt+s",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "extension.wrapInColumn",
-                "key": "alt+x",
-                "mac": "alt+x",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "extension.wrapInRow",
-                "key": "alt+r",
-                "mac": "alt+r",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "extension.wrapInListView",
-                "key": "alt+l",
-                "mac": "alt+l",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "extension.wrapInPositioned",
-                "key": "alt+p",
-                "mac": "alt+p",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "extension.wrapInExpanded",
-                "key": "alt+e",
-                "mac": "alt+e",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "extension.wrapInText",
-                "key": "alt+t",
-                "mac": "alt+t",
-                "when": "editorTextFocus"
-            }
-        ],
-        "snippets": [
-            {
-                "language": "dart",
-                "path": "./src/snippets/snippets.json"
-            }
-        ]
+        {
+          "command": "extension.addFlutterWebFile"
+        },
+        {
+          "command": "extension.addFluterBaseProyect"
+        }
+      ]
     },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "lint": "eslint src --ext ts",
-        "watch": "tsc -watch -p ./",
-        "pretest": "npm run compile && npm run lint",
-        "test": "node ./out/test/runTest.js"
-    },
-    "devDependencies": {
-        "@types/vscode": "^1.50.0",
-        "@types/glob": "^7.1.3",
-        "@types/mocha": "^8.0.0",
-        "@types/node": "^12.11.7",
-        "eslint": "^7.9.0",
-        "@typescript-eslint/eslint-plugin": "^4.1.1",
-        "@typescript-eslint/parser": "^4.1.1",
-        "glob": "^7.1.6",
-        "mocha": "^8.1.3",
-        "typescript": "^4.0.2",
-        "vscode-test": "^1.4.0",
-        "@types/q": "^1.0.0"
-    },
-    "dependencies": {
-        "q": "^1.4.1",
-        "path": "^0.12.7"
-    }
+    "keybindings": [
+      {
+        "command": "extension.wrapInContainer",
+        "key": "alt+c",
+        "mac": "alt+c",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.wrapInStack",
+        "key": "alt+s",
+        "mac": "alt+s",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.wrapInColumn",
+        "key": "alt+x",
+        "mac": "alt+x",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.wrapInRow",
+        "key": "alt+r",
+        "mac": "alt+r",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.wrapInListView",
+        "key": "alt+l",
+        "mac": "alt+l",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.wrapInPositioned",
+        "key": "alt+p",
+        "mac": "alt+p",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.wrapInExpanded",
+        "key": "alt+e",
+        "mac": "alt+e",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.wrapInText",
+        "key": "alt+t",
+        "mac": "alt+t",
+        "when": "editorTextFocus"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "dart",
+        "path": "./src/snippets/snippets.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.0.0",
+    "@types/node": "^12.11.7",
+    "@typescript-eslint/eslint-plugin": "^4.1.1",
+    "@typescript-eslint/parser": "^4.1.1",
+    "glob": "^7.1.6",
+    "mocha": "^8.1.3"
+  },
+  "dependencies": {
+    "q": "^1.4.1",
+    "path": "^0.12.7"
+  }
 }

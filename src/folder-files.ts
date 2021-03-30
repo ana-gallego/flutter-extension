@@ -176,4 +176,24 @@ export class FolderFiles {
 
         return files;
     }
+
+    services(folderName: string): IFiles[] {
+        let contents: Contents = new Contents();
+        let files: IFiles[] = [
+            {
+                name: path.join(folderName, `firebase-service.dart`),
+                content: contents.firebaseService()
+            },
+            {
+                name: path.join(folderName, `auth-service.dart`),
+                content: contents.authService()
+            },
+            {
+                name: path.join(folderName, `http-service.dart`),
+                content: contents.httpService()
+            },
+        ];
+
+        return files;
+    }
 }

@@ -2,13 +2,6 @@ import { ExtensionContext, commands, window, SnippetString } from 'vscode';
 import { AddFiles } from './add-files';
 
 
-export enum messages {
-	'Saludos, Gorgonitas!',
-	'Estamos ready pal party!',
-	'Hablameloooooooooo',
-	'Gracias por usar mi extensión! lofiu ♡'
-};
-
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: ExtensionContext) {
@@ -48,10 +41,6 @@ export function activate(context: ExtensionContext) {
 	/**
 	 * FILESSSSS
 	 */
-	
-	let randomPosition = Math.floor(Math.random() * 3) + 1;
-	window.showInformationMessage(messages[randomPosition]);
-
 
 	var addFlutterFile = commands.registerCommand('extension.addFlutterFile', (args) => {
 		const addFiles: AddFiles = new AddFiles();
@@ -89,7 +78,11 @@ export function activate(context: ExtensionContext) {
 				addFiles.createFiles(x, 'extras');
 			})
 			/// Servicios
-			//.then(() => addFiles.createFolder(args.fsPath + "/services"))
+			.then(() => addFiles.createFolder(args.fsPath + "/services").then((x) => {
+
+				addFiles.createFiles(x, 'services');
+
+			}))
 			/// Providers
 			//.then(() => addFiles.createFolder(args.fsPath + "/providers"))
 			/// Vistas

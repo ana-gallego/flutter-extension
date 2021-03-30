@@ -1,16 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deactivate = exports.activate = exports.messages = void 0;
+exports.deactivate = exports.activate = void 0;
 const vscode_1 = require("vscode");
 const add_files_1 = require("./add-files");
-var messages;
-(function (messages) {
-    messages[messages["Saludos, Gorgonitas!"] = 0] = "Saludos, Gorgonitas!";
-    messages[messages["Estamos ready pal party!"] = 1] = "Estamos ready pal party!";
-    messages[messages["Hablameloooooooooo"] = 2] = "Hablameloooooooooo";
-    messages[messages["Gracias por usar mi extensi\u00F3n! lofiu \u2661"] = 3] = "Gracias por usar mi extensi\u00F3n! lofiu \u2661";
-})(messages = exports.messages || (exports.messages = {}));
-;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
@@ -28,8 +20,6 @@ function activate(context) {
     /**
      * FILESSSSS
      */
-    let randomPosition = Math.floor(Math.random() * 3) + 1;
-    vscode_1.window.showInformationMessage(messages[randomPosition]);
     var addFlutterFile = vscode_1.commands.registerCommand('extension.addFlutterFile', (args) => {
         const addFiles = new add_files_1.AddFiles();
         addFiles.showFileNameDialog(args)
@@ -63,7 +53,9 @@ function activate(context) {
             addFiles.createFiles(x, 'extras');
         })
             /// Servicios
-            //.then(() => addFiles.createFolder(args.fsPath + "/services"))
+            .then(() => addFiles.createFolder(args.fsPath + "/services").then((x) => {
+            addFiles.createFiles(x, 'services');
+        }))
             /// Providers
             //.then(() => addFiles.createFolder(args.fsPath + "/providers"))
             /// Vistas

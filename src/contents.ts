@@ -756,21 +756,15 @@ export './password-input.dart';
 
 
   public firebaseService() {
-    return `/*
+    return `
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
-
 
 /// este servicio se comunica directamente con la base de datos, todos los llamados deben ser atravez de el
 class FirebaseService {
-  Firestore firestore = Firestore.instance;
-  final CloudFunctions functions =  CloudFunctions.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<QuerySnapshot> getData(String documentId, String table) {
-    return firestore
-        .collection(table)
-        .where('id', isEqualTo: documentId)
-        .getDocuments();
+    return firestore.collection(table).where('id', isEqualTo: documentId).get();
   }
 
   Future<QuerySnapshot> getCollection(
@@ -779,9 +773,9 @@ class FirebaseService {
       return firestore
           .collection(collection)
           .where(property, isEqualTo: equal)
-          .getDocuments();
+          .get();
     } else {
-      return firestore.collection(collection).getDocuments();
+      return firestore.collection(collection).get();
     }
   }
 
@@ -809,167 +803,139 @@ class FirebaseService {
     String documentId = document['id'];
 
     if (documentId != null) {
-      return firestore.collection(table).document(documentId).setData(document);
+      return firestore.collection(table).doc(documentId).set(document);
     } else {
       String id = createId(table);
-      return firestore
-          .collection(table)
-          .document(id)
-          .setData({'id': id, ...document});
+      return firestore.collection(table).doc(id).set({'id': id, ...document});
     }
   }
 
   Future updateDocument(documentID, data, table) {
-    return firestore.document('$table/$documentID').updateData(data);
+    return firestore.doc('$table/$documentID').update(data);
   }
 
   createId(collection) {
-    CollectionReference collRef = Firestore.instance.collection(collection);
-    DocumentReference docReferance = collRef.document();
-    return docReferance.documentID;
+    CollectionReference collRef =
+        FirebaseFirestore.instance.collection(collection);
+    DocumentReference docReferance = collRef.doc();
+    return docReferance.id;
   }
 
   deleteDocument(documentId, collection) {
-    return firestore.collection(collection).document(documentId)..delete();
+    return firestore.collection(collection).doc(documentId).delete();
   }
 
   Future<DocumentSnapshot> getDocument(documentId, collection) {
-    return firestore.collection(collection).document(documentId).get();
+    return firestore.collection(collection).doc(documentId).get();
   }
 }
 
 final FirebaseService firebaseService = FirebaseService();
-    */    `;
+        `;
 
 
   }
   public authService() {
     return `
-/*import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-/// este servicio será usado para manejar toda la autenticación y registro de los usuario
+/// este servicio será usado para manejar toda la autenticación y registro de los usuarios
 
 class AuthService {
-  ///signIn
-  ///
-  ///This void tries to sign in a user with the given email and password.
-  Future<AuthResult> logIn(String email, String password) async {
+  ///Attempts to sign in a user with the given email address and password.
+  Future<UserCredential> logIn(String email, String password) async {
     return await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email.trim(), password: password.trim());
   }
 
-  ///signUp
-  ///
-  ///This void creates a user with the given email and password.
-
-  Future<AuthResult> signUp(String email, String password) async {
+  ///Tries to create a new user account with the given email address and password.
+  Future<UserCredential> signUp(String email, String password) async {
     return await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
   }
 
-  ///sendPasswordReset
-  ///
-  /// This void send a password-reset email to the given email
+  /// Triggers the Firebase Authentication backend to send a password-reset email to the given email address,
+  /// which must correspond to an existing user of your app
   Future sendPasswordReset(String email) async {
     return await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
 
-  ///getCurrentUser
-  ///
-  /// This void returns a string with the current logued user id
-  Future<FirebaseUser> getCurrentId() async {
-    return FirebaseAuth.instance.currentUser();
+  /// This void returns the current [User] if they are currently signed-in, or null if not.
+  User getCurrentId() {
+    return FirebaseAuth.instance.currentUser;
   }
 
+  /// Signs out the current user.
   Future signOut() {
     return FirebaseAuth.instance.signOut();
   }
 }
 
 final AuthService auth = AuthService();
-*/
     `;
 
 
   }
   public httpService() {
-    return `/*
+    return `
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'dart:convert';
 
 class HttpService {
-  Future<HttpServiceResponse> get(BuildContext context, String endpoint,
-      {showApiResponse = false}) async {
-    String url = "";
+  String url = "";
+  Future<HttpServiceResponse> get(
+      {@required String endpoint, Map<String, String> headers}) async {
     try {
-      Response response = await http.get(url + "/" + endpoint, headers: {
-      });
-      return validateResponse(context, response);
+      Response response =
+          await http.get(url + "/" + endpoint, headers: headers ?? {});
+      return validateResponse(response);
     } catch (e) {
-      throw e;
+      return HttpServiceResponse(success: false, message: "");
     }
   }
 
   Future<HttpServiceResponse> post(
-      BuildContext context, String endpoint, Map<String, dynamic> data) async {
+      {@required String endpoint,
+      @required Map<String, dynamic> body,
+      Map<String, dynamic> headers}) async {
     try {
-      String url = "";
-      Response response = await http
-          .post(url + "/" + endpoint, body: json.encode(data), headers: {
-      });
-      return validateResponse(context, response);
+      Response response = await http.post(url + "/" + endpoint,
+          body: json.encode(body), headers: headers ?? {});
+      return validateResponse(response);
     } catch (e) {
-      return HttpServiceResponse(
-          success: false,
-          message:"");
+      return HttpServiceResponse(success: false, message: "");
     }
   }
 
   Future<HttpServiceResponse> put(
-      BuildContext context, String endpoint, Map<String, dynamic> data) async {
+      {@required String endpoint,
+      @required Map<String, dynamic> body,
+      Map<String, dynamic> headers}) async {
     try {
-      String url ="";
-      Response response = await http
-          .put(url + "/" + endpoint, body: json.encode(data), headers: {
-      });
-      return validateResponse(context, response);
+      Response response = await http.put(url + "/" + endpoint,
+          body: json.encode(body), headers: headers ?? {});
+      return validateResponse(response);
     } catch (e) {
-      return HttpServiceResponse(
-          success: false,
-          message:
-              "Ha ocurrido un problema en la conexión. Vuelve a intentar más tarde.");
+      return HttpServiceResponse(success: false, message: "");
     }
   }
 
-  Future<HttpServiceResponse> validateResponse(
-      BuildContext context, Response response) async {
-    String message =
-        "Ha ocurrido un problema en la conexión. Vuelve a intentar más tarde.";
-    HttpServiceResponse httpServiceResponse;
+  Future<HttpServiceResponse> validateResponse(Response response) async {
+    String message = "ERROR";
     switch (response.statusCode) {
       case 200:
       case 201:
-        httpServiceResponse = HttpServiceResponse(
-            success: true, message: response.body, body: response.body);
+        return HttpServiceResponse(
+            success: true, body: response.body, message: "");
         break;
 
-      case 500:
-        httpServiceResponse =
-            HttpServiceResponse(success: false, message: message);
-        break;
-
-
-      case 400:
-      case 404:
       default:
-
-        httpServiceResponse =
-            HttpServiceResponse(success: false, message: message);
+        return HttpServiceResponse(success: false, message: message);
     }
-
-    return httpServiceResponse;
   }
-  }
+}
 
 HttpService httpService = HttpService();
 
@@ -993,8 +959,7 @@ class HttpServiceResponse {
     data['body'] = this.body;
     return data;
   }
-}*/
-    
+}
     `;
 
 

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FolderFiles = void 0;
-const contents_1 = require("./contents");
 const path = require("path");
+const contents_1 = require("./contents");
 const utils_1 = require("./utils");
 /**
  * Retorna una lista con los nombres y contenidos de los archivos que se agregaran
@@ -148,6 +148,24 @@ class FolderFiles {
             {
                 name: path.join(folderName, `simple-button.dart`),
                 content: contents.simpleButton()
+            },
+        ];
+        return files;
+    }
+    services(folderName) {
+        let contents = new contents_1.Contents();
+        let files = [
+            {
+                name: path.join(folderName, `firebase-service.dart`),
+                content: contents.firebaseService()
+            },
+            {
+                name: path.join(folderName, `auth-service.dart`),
+                content: contents.authService()
+            },
+            {
+                name: path.join(folderName, `http-service.dart`),
+                content: contents.httpService()
             },
         ];
         return files;

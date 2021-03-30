@@ -91,6 +91,9 @@ export class AddFiles {
             case 'buttons':
                 files = ff.buttons(folderPath);
                 break;
+            case 'services':
+                files = ff.services(folderPath);
+                break;
 
             default:
                 break;
