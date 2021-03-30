@@ -3,12 +3,12 @@
 Extensión para desarrollo de aplicaciónes flutter con mvc_pattern
 
 Paquetes:
-- [mvc_pattern](https://pub.dev/packages/mvc_pattern)
-- [responsive_builder](https://pub.dev/packages/responsive_builder)(Si es un proyecto web)
-- [provider](https://pub.dev/packages/provider) (para provider Shortcuts)
-- [http](https://pub.dev/packages/http) (http service)
-- [cloud_firestore](https://pub.dev/packages/cloud_firestore) (firebase service)
-- [firebase_auth](https://pub.dev/packages/firebase_auth) (auth service)
+[mvc_pattern](https://pub.dev/packages/mvc_pattern)
+[responsive_builder](https://pub.dev/packages/responsive_builder)(Si es un proyecto web)
+[provider](https://pub.dev/packages/provider)(para provider Shortcuts)
+[http](https://pub.dev/packages/http) (http service)
+[cloud_firestore](https://pub.dev/packages/cloud_firestore) (firebase service)
+[firebase_auth](https://pub.dev/packages/firebase_auth) (auth service)
 
 
 ## Release Notes
@@ -20,7 +20,7 @@ Se añaden wrappers
 * Crear un proyecto base
 
 [Proyecto base demo](https://www.youtube.com/watch?v=nI7Q8Lx5jjA)
-[![Alt text for your video](https://img.youtube.com/vi/nI7Q8Lx5jjA/0.jpg)](https://www.youtube.com/watch?v=nI7Q8Lx5jjA&ab_channel=AnaMaria)
+[![SC2 Video](doc/SC2_youtube.gif)](https://www.youtube.com/watch?v=nI7Q8Lx5jjA)
 
 
 
