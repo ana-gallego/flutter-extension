@@ -1,12 +1,11 @@
 import { descriptionFiles } from "./description-files";
 
 /**
- * Tdos los string con los contenidos de cada pagina 
+ * Tdos los string con los contenidos de cada pagina
  *  */
 export class Contents {
-
   /**
-   * 
+   *
    */
   public main() {
     return `
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Mision X',
+        title: 'Andromeda',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -29,11 +28,10 @@ class MyApp extends StatelessWidget {
   }
 }
     `;
-
   }
 
   /**
-   * 
+   *
    * @param fileName es el nombre del archivo .dart ej: edit-user
    * @param pageName es el nombre que tomará el stateWidget se crea en base al nombre del archivo ej: EditUser
    */
@@ -59,16 +57,20 @@ return ScreenTypeLayout(
   `;
   }
 
-
   /**
-   * 
+   *
    * @param fileName es el nombre del archivo .dart ej: edit-user
    * @param pageName es el nombre que tomará el stateWidget se crea en base al nombre del archivo ej: EditUser
    * @param viewType define si es una vista movil o escritorio (si es un proyeto web), o simple (si es un proyecto solo movil)
    */
 
-  public simplePageContent(fileName: string, pageName: string, viewType: string): string {
-    let routeLine = (viewType !== "") ? "" : `static const route = '/${pageName}';`;
+  public simplePageContent(
+    fileName: string,
+    pageName: string,
+    viewType: string
+  ): string {
+    let routeLine =
+      viewType !== "" ? "" : `static const route = '/${pageName}';`;
     return `
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -76,7 +78,9 @@ import './${fileName}-controller.dart';
 
 
 class ${pageName}${viewType}Page extends StatefulWidget {
-  ${routeLine}
+
+  const {pageName}${viewType}Page({Key? key}) : super(key: key);
+
   @override
   _${pageName}${viewType}PageState createState() => _${pageName}${viewType}PageState();
 }
@@ -85,18 +89,16 @@ class _${pageName}${viewType}PageState extends StateMVC<${pageName}${viewType}Pa
   _${pageName}${viewType}PageState() : super(${pageName}Controller()) {
     controller = ${pageName}Controller.con;
   }
-
-  ${pageName}Controller controller;
+  @override
+  late ${pageName}Controller controller;
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(title: Text(controller.pageName)),
-      body: Container(
-        child: Center(
-          child: Text(controller.pageName+ "${viewType}"),
-        ),
+      body: Center(
+        child: Text(controller.pageName + ""),
       ),
     );
     
@@ -106,12 +108,11 @@ class _${pageName}${viewType}PageState extends StateMVC<${pageName}${viewType}Pa
   }
 
   /**
-   * 
+   *
    * @param name nombre del controller
    */
 
   public controllerContent(name: string): string {
-
     return `
 import 'package:mvc_pattern/mvc_pattern.dart';
 
@@ -126,16 +127,14 @@ static ${name}Controller _this;
 
 ${name}Controller._();
 
-static ${name}Controller get con => _this;
+static late ${name}Controller get con => _this;
 
 String pageName = '${name}';
 }
             `;
   }
 
-
   public loginPage() {
-
     return `
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -206,12 +205,10 @@ class _LoginPageState extends StateMVC<LoginPage> {
     );
   }
 }
-`
-
+`;
   }
 
   public loginController() {
-
     return `
 import '../../src/home/home-page.dart';
 import 'package:flutter/material.dart';
@@ -276,7 +273,6 @@ class LoginController extends ControllerMVC {
    */
 
   public colors() {
-
     return `
   import 'package:flutter/material.dart';  
   
@@ -299,7 +295,6 @@ class LoginController extends ControllerMVC {
    */
 
   public dimens() {
-
     return `
   import 'package:flutter/material.dart';  
   
@@ -652,8 +647,8 @@ class EmailInput extends StatelessWidget {
   }
 
   /**
- * Código base input tipo contraseña
- */
+   * Código base input tipo contraseña
+   */
   public passwordInput() {
     return `
 import 'package:flutter/material.dart';
@@ -693,8 +688,8 @@ class PasswordInput extends StatelessWidget {
   }
 
   /**
- * Código base botón simple
- */
+   * Código base botón simple
+   */
   public simpleButton() {
     return `
 import 'package:flutter/material.dart';
@@ -727,33 +722,26 @@ class SimpleButton extends StatelessWidget {
   }
 
   /**
- * Se exportan todos los archivos de la carpeta form
- */
+   * Se exportan todos los archivos de la carpeta form
+   */
   public inputs() {
     return `
 export './email-input.dart';
 export './password-input.dart';
     `;
-
   }
 
   /**
- * Se exportan todos los archivos de la carpeta buttons
- */
+   * Se exportan todos los archivos de la carpeta buttons
+   */
 
   public buttons() {
     return `export './simple-button.dart';`;
-
   }
-
-
-
-
 
   /**
    * SERVICESSSSS
    */
-
 
   public firebaseService() {
     return `
@@ -832,8 +820,6 @@ class FirebaseService {
 
 final FirebaseService firebaseService = FirebaseService();
         `;
-
-
   }
   public authService() {
     return `
@@ -873,8 +859,6 @@ class AuthService {
 
 final AuthService auth = AuthService();
     `;
-
-
   }
   public httpService() {
     return `
@@ -961,7 +945,5 @@ class HttpServiceResponse {
   }
 }
     `;
-
-
   }
 }

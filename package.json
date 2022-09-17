@@ -1,7 +1,7 @@
 {
-  "name": "mvc-pattern-snippets-wrappers",
-  "displayName": "Flutter mvc_pattern generator",
-  "description": "Extensión para desarrollo en flutter con patron mvc_pattern",
+  "name": "andromeda",
+  "displayName": "Flutter code generator",
+  "description": "Extensión para desarrollo en flutter",
   "version": "0.0.7",
   "publisher": "Anagalleg0",
   "engines": {
@@ -11,7 +11,8 @@
     "Flutter",
     "Dart",
     "mvc_pattern",
-    "Templates"
+    "riverpod",
+    "templates"
   ],
   "categories": [
     "Other",
@@ -163,6 +164,7 @@
     "vscode": "^1.1.37"
   },
   "dependencies": {
+    "express-es6-template-engine": "^2.2.3",
     "path": "^0.12.7",
     "q": "^1.5.1"
   }
