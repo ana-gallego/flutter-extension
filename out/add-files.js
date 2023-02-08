@@ -15,24 +15,29 @@ class AddFiles {
         }
         else {
             if (!vscode_1.window.activeTextEditor) {
-                deferred.reject('Please open a file first.. or just right-click on a file/folder and use the context menu!');
+                deferred.reject("Please open a file first.. or just right-click on a file/folder and use the context menu!");
                 return deferred.promise;
             }
             else {
                 clickedFolderPath = path.dirname(vscode_1.window.activeTextEditor.document.fileName);
             }
         }
-        var newFolderPath = fs.lstatSync(clickedFolderPath).isDirectory() ? clickedFolderPath : path.dirname(clickedFolderPath);
-        if (vscode_1.workspace.rootPath === undefined) {
-            deferred.reject('Please open a project first. Thanks! :)');
+        var newFolderPath = fs.lstatSync(clickedFolderPath).isDirectory()
+            ? clickedFolderPath
+            : path.dirname(clickedFolderPath);
+        if (vscode_1.workspace.workspaceFolders === undefined) {
+            deferred.reject("Please open a project first. Thanks! :)");
         }
         else {
-            vscode_1.window.showInputBox({
-                prompt: 'What\'s the name of the new folder?',
-                value: 'folder'
-            }).then((fileName) => {
-                if (!fileName || /[~`!#$%\^&*+=\[\]\\';,/{}|\\":<>\?\s]/g.test(fileName)) {
-                    deferred.reject('That\'s not a valid name! (no whitespaces or special characters)');
+            vscode_1.window
+                .showInputBox({
+                prompt: "What's the name of the new folder?",
+                value: "folder",
+            })
+                .then((fileName) => {
+                if (!fileName ||
+                    /[~`!#$%\^&*+=\[\]\\';,/{}|\\":<>\?\s]/g.test(fileName)) {
+                    deferred.reject("That's not a valid name! (no whitespaces or special characters)");
                 }
                 else {
                     deferred.resolve(path.join(newFolderPath, fileName));
@@ -50,40 +55,40 @@ class AddFiles {
                 deferred.resolve(path);
             }
             else {
-                deferred.reject('Folder already exists');
+                deferred.reject("Folder already exists");
             }
         });
         return deferred.promise;
     }
-    // Get file contents and create the new files in the folder 
+    // Get file contents and create the new files in the folder
     createFiles(folderPath, type) {
         const deferred = Q.defer();
         const af = new AddFiles();
         var files = [];
         let ff = new folder_files_1.FolderFiles();
         switch (type) {
-            case 'responsive':
+            case "responsive":
                 files = ff.responsiveProyect(folderPath);
                 break;
-            case 'simple':
+            case "simple":
                 files = ff.simpleProyect(folderPath);
                 break;
-            case 'extras':
+            case "extras":
                 files = ff.extras(folderPath);
                 break;
-            case 'main':
+            case "main":
                 files = ff.main(folderPath);
                 break;
-            case 'login':
+            case "login":
                 files = ff.login(folderPath);
                 break;
-            case 'form':
+            case "form":
                 files = ff.form(folderPath);
                 break;
-            case 'buttons':
+            case "buttons":
                 files = ff.buttons(folderPath);
                 break;
-            case 'services':
+            case "services":
                 files = ff.services(folderPath);
                 break;
             default:
@@ -103,7 +108,7 @@ class AddFiles {
     writeFiles(files) {
         const deferred = Q.defer();
         var errors = [];
-        files.forEach(file => {
+        files.forEach((file) => {
             fs.writeFile(file.name, file.content, (err) => {
                 if (err) {
                     errors.push(err.message);
@@ -119,7 +124,9 @@ class AddFiles {
     openPageInEditor(folderName) {
         const deferred = Q.defer();
         var inputName = path.parse(folderName).name;
-        vscode_1.workspace.openTextDocument(path.join(folderName, `${inputName}-page.dart`)).then((textDocument) => {
+        vscode_1.workspace
+            .openTextDocument(path.join(folderName, `${inputName}-page.dart`))
+            .then((textDocument) => {
             if (!textDocument) {
                 return;
             }

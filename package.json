@@ -1,50 +1,30 @@
 {
   "name": "andromeda",
-  "displayName": "Flutter code generator",
+  "displayName": "Andromeda",
   "description": "Extensión para desarrollo en flutter",
-  "version": "0.0.7",
-  "publisher": "Anagalleg0",
+  "version": "0.0.8",
+  "publisher": "ana-gallego",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ana-gallego/flutter-extension.git"
+  },
+  "icon": "images/icon.png",
   "engines": {
-    "vscode": "^1.50.0"
+    "vscode": "^1.75.0"
   },
   "keywords": [
     "Flutter",
-    "Dart",
-    "mvc_pattern",
-    "riverpod",
-    "templates"
+    "Dart"
   ],
   "categories": [
     "Other",
     "Programming Languages",
     "Snippets"
   ],
-  "activationEvents": [
-    "*",
-    "onCommand:extension.wrapInContainer",
-    "onCommand:extension.wrapInStack",
-    "onCommand:extension.wrapInColumn",
-    "onCommand:extension.wrapInRow",
-    "onCommand:extension.wrapInListView",
-    "onCommand:extension.wrapInPositioned",
-    "onCommand:extension.wrapInExpanded",
-    "onCommand:extension.wrapInText"
-  ],
+  "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
-      {
-        "command": "extension.addFlutterFile",
-        "title": "Add Flutter File"
-      },
-      {
-        "command": "extension.addFlutterWebFile",
-        "title": "Add Flutter Web File"
-      },
-      {
-        "command": "extension.addFluterBaseProyect",
-        "title": "Add Base App"
-      },
       {
         "command": "extension.wrapInContainer",
         "title": "Wrap in Container"
@@ -56,6 +36,10 @@
       {
         "command": "extension.wrapInColumn",
         "title": "Wrap in Column"
+      },
+      {
+        "command": "extension.wrapInRow",
+        "title": "Wrap in Row"
       },
       {
         "command": "extension.wrapInListView",
@@ -75,17 +59,7 @@
       }
     ],
     "menus": {
-      "explorer/context": [
-        {
-          "command": "extension.addFlutterFile"
-        },
-        {
-          "command": "extension.addFlutterWebFile"
-        },
-        {
-          "command": "extension.addFluterBaseProyect"
-        }
-      ]
+      "explorer/context": []
     },
     "keybindings": [
       {

@@ -9,22 +9,29 @@ function activate(context) {
     /**
      * WRAPPERSSSS!!!!
      */
-    context.subscriptions.push(vscode_1.commands.registerCommand('extension.wrapInContainer', () => insertSnippet("${1:Container}(\n" + getSpacer() + "child: $2", "\n)", getSpacer())));
-    context.subscriptions.push(vscode_1.commands.registerCommand('extension.wrapInStack', () => insertSnippet("${1:Stack}(\n" + getSpacer() + "children: [\n" + getSpacer().repeat(2), "$2\n" + getSpacer() + "]\n)", getSpacer().repeat(2))));
-    context.subscriptions.push(vscode_1.commands.registerCommand('extension.wrapInColumn', () => insertSnippet("${1:Column}(\n" + getSpacer() + "children: [\n" + getSpacer().repeat(2), "$2\n" + getSpacer() + "]\n)", getSpacer().repeat(2))));
-    context.subscriptions.push(vscode_1.commands.registerCommand('extension.wrapInRow', () => insertSnippet("${1:Row}(\n" + getSpacer() + "children: [\n" + getSpacer().repeat(2), "$2\n" + getSpacer() + "]\n)", getSpacer().repeat(2))));
-    context.subscriptions.push(vscode_1.commands.registerCommand('extension.wrapInListView', () => insertSnippet("${1:ListView}(\n" + getSpacer() + "children: [\n" + getSpacer().repeat(2), "$2\n" + getSpacer() + "]\n)", getSpacer().repeat(2))));
-    context.subscriptions.push(vscode_1.commands.registerCommand('extension.wrapInPositioned', () => insertSnippet("${1:Positioned}(\n" + getSpacer() + "child: $2", "\n)", getSpacer())));
-    context.subscriptions.push(vscode_1.commands.registerCommand('extension.wrapInExpanded', () => insertSnippet("${1:Expanded}(\n" + getSpacer() + "child: $2", "\n)", getSpacer())));
-    context.subscriptions.push(vscode_1.commands.registerCommand('extension.wrapInText', () => insertSnippet("${1:Text}(\n" + "''", "\n)", "")));
+    context.subscriptions.push(vscode_1.commands.registerCommand("extension.wrapInContainer", () => insertSnippet("${1:Container}(\n" + getSpacer() + "child: $2", "\n)", getSpacer())));
+    context.subscriptions.push(vscode_1.commands.registerCommand("extension.wrapInStack", () => insertSnippet("${1:Stack}(\n" + getSpacer() + "children: [\n" + getSpacer().repeat(2), "$2\n" + getSpacer() + "]\n)", getSpacer().repeat(2))));
+    context.subscriptions.push(vscode_1.commands.registerCommand("extension.wrapInColumn", () => insertSnippet("${1:Column}(\n" +
+        getSpacer() +
+        "children: [\n" +
+        getSpacer().repeat(2), "$2\n" + getSpacer() + "]\n)", getSpacer().repeat(2))));
+    context.subscriptions.push(vscode_1.commands.registerCommand("extension.wrapInRow", () => insertSnippet("${1:Row}(\n" + getSpacer() + "children: [\n" + getSpacer().repeat(2), "$2\n" + getSpacer() + "]\n)", getSpacer().repeat(2))));
+    context.subscriptions.push(vscode_1.commands.registerCommand("extension.wrapInListView", () => insertSnippet("${1:ListView}(\n" +
+        getSpacer() +
+        "children: [\n" +
+        getSpacer().repeat(2), "$2\n" + getSpacer() + "]\n)", getSpacer().repeat(2))));
+    context.subscriptions.push(vscode_1.commands.registerCommand("extension.wrapInPositioned", () => insertSnippet("${1:Positioned}(\n" + getSpacer() + "child: $2", "\n)", getSpacer())));
+    context.subscriptions.push(vscode_1.commands.registerCommand("extension.wrapInExpanded", () => insertSnippet("${1:Expanded}(\n" + getSpacer() + "child: $2", "\n)", getSpacer())));
+    context.subscriptions.push(vscode_1.commands.registerCommand("extension.wrapInText", () => insertSnippet("${1:Text}(\n" + "''", "\n)", "")));
     /**
      * FILESSSSS
      */
-    var addFlutterFile = vscode_1.commands.registerCommand('extension.addFlutterFile', (args) => {
+    var addFlutterFile = vscode_1.commands.registerCommand("extension.addFlutterFile", (args) => {
         const addFiles = new add_files_1.AddFiles();
-        addFiles.showFileNameDialog(args)
+        addFiles
+            .showFileNameDialog(args)
             .then((path) => addFiles.createFolder(path))
-            .then((path) => addFiles.createFiles(path, 'simple'))
+            .then((path) => addFiles.createFiles(path, "simple"))
             .then(addFiles.openPageInEditor)
             .catch((err) => {
             if (err) {
@@ -32,11 +39,12 @@ function activate(context) {
             }
         });
     });
-    var addFlutterWebFile = vscode_1.commands.registerCommand('extension.addFlutterWebFile', (args) => {
+    var addFlutterWebFile = vscode_1.commands.registerCommand("extension.addFlutterWebFile", (args) => {
         const addFiles = new add_files_1.AddFiles();
-        addFiles.showFileNameDialog(args)
+        addFiles
+            .showFileNameDialog(args)
             .then((path) => addFiles.createFolder(path))
-            .then((path) => addFiles.createFiles(path, 'responsive'))
+            .then((path) => addFiles.createFiles(path, "responsive"))
             .then(addFiles.openPageInEditor)
             .catch((err) => {
             if (err) {
@@ -44,43 +52,49 @@ function activate(context) {
             }
         });
     });
-    var addFluterBaseProyect = vscode_1.commands.registerCommand('extension.addFluterBaseProyect', (args) => {
+    var addFluterBaseProyect = vscode_1.commands.registerCommand("extension.addFluterBaseProyect", (args) => {
         const addFiles = new add_files_1.AddFiles();
         addFiles.createFiles(args.fsPath, "main");
         /// Se crea carpeta Extras
-        addFiles.createFolder(args.fsPath + "/tools")
+        addFiles
+            .createFolder(args.fsPath + "/tools")
             .then((x) => {
-            addFiles.createFiles(x, 'extras');
+            addFiles.createFiles(x, "extras");
         })
             /// Servicios
             .then(() => addFiles.createFolder(args.fsPath + "/services").then((x) => {
-            addFiles.createFiles(x, 'services');
+            addFiles.createFiles(x, "services");
         }))
             /// Providers
             //.then(() => addFiles.createFolder(args.fsPath + "/providers"))
             /// Vistas
-            .then(() => addFiles.createFolder(args.fsPath + "/src")
-            .then(() => {
-            addFiles.createFolder(args.fsPath + "/src/home")
+            .then(() => addFiles.createFolder(args.fsPath + "/src").then(() => {
+            addFiles
+                .createFolder(args.fsPath + "/src/home")
                 .then((x) => {
-                addFiles.createFiles(x, 'simple');
+                addFiles.createFiles(x, "simple");
             })
                 .then(() => {
-                addFiles.createFolder(args.fsPath + "/src/login")
+                addFiles
+                    .createFolder(args.fsPath + "/src/login")
                     .then((x) => {
-                    addFiles.createFiles(x, 'login');
+                    addFiles.createFiles(x, "login");
                 });
             });
         }))
             /// Componentes reutilizables
             .then(() => addFiles.createFolder(args.fsPath + "/widgets").then(() => {
-            // Form Inputs	
-            addFiles.createFolder(args.fsPath + "/widgets/inputs").then((x) => {
-                addFiles.createFiles(x, 'form');
+            // Form Inputs
+            addFiles
+                .createFolder(args.fsPath + "/widgets/inputs")
+                .then((x) => {
+                addFiles.createFiles(x, "form");
             });
-            // Buttons	
-            addFiles.createFolder(args.fsPath + "/widgets/buttons").then((x) => {
-                addFiles.createFiles(x, 'buttons');
+            // Buttons
+            addFiles
+                .createFolder(args.fsPath + "/widgets/buttons")
+                .then((x) => {
+                addFiles.createFiles(x, "buttons");
             });
         }))
             .catch((err) => {
@@ -100,9 +114,9 @@ exports.deactivate = deactivate;
 function getSpacer() {
     const editor = vscode_1.window.activeTextEditor;
     if (editor && editor.options.insertSpaces) {
-        return ' '.repeat(editor.options.tabSize);
+        return " ".repeat(editor.options.tabSize);
     }
-    return '\t';
+    return "\t";
 }
 function insertSnippet(before, after, space) {
     const editor = vscode_1.window.activeTextEditor;

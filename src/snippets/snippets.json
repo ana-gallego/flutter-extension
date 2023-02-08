@@ -1,6 +1,28 @@
 {
+    "App localizations": {
+        "body": [
+            "AppLocalizations.of(context)!"
+        ],
+        "prefix": "localizations.of"
+    },
+    "Controller & State": {
+        "body": [
+            "var controller  = ref.watch(${1:}.notifier);",
+            "var state  = ref.watch(${1:});"
+        ],
+        "prefix": "controller"
+    },
+    "Create A class": {
+        "body": [
+            "",
+            "class ${1:} {",
+            "",
+            "}"
+        ],
+        "description": "Nueva clase",
+        "prefix": "cls"
+    },
     "Create Provider": {
-        "prefix": "createprovider",
         "body": [
             "import 'package:flutter/material.dart';",
             "",
@@ -8,64 +30,31 @@
             "",
             "}"
         ],
-        "description": "Nueva clase que extiende de ChangeNotifier"
+        "description": "Nueva clase que extiende de ChangeNotifier",
+        "prefix": "createprovider"
     },
-    "Create A class": {
-        "prefix": "cls",
+    "Función flechita": {
         "body": [
-            "",
-            "class ${1:} {",
-            "",
-            "}"
+            "() =>"
         ],
-        "description": "Nueva clase"
+        "prefix": "()="
     },
-    "Insert Tools": {
-        "prefix": "inserte",
+    "Future con tipo": {
         "body": [
-            "import '../../tools/tools.dart';"
+            "Future<>"
         ],
-        "description": "insertar tools"
-    },
-    "Insert Material": {
-        "prefix": "insertm",
-        "body": [
-            "import 'package:flutter/material.dart';"
-        ],
-        "description": "insertar import de material"
-    },
-    "Get Named Routes arguments": {
-        "prefix": "args",
-        "body": [
-            "dynamic args = ModalRoute.of(context).settings.arguments;",
-            "print(args);"
-        ],
-        "description": "se obtienen los argumentos pasados mediante route params y se asignan a una variable dinamica"
-    },
-    "Init State + Future Delayed": {
-        "prefix": "initstate",
-        "body": [
-            "@override",
-            "void initState() {",
-            "Future.delayed(Duration.zero, () {",
-            "",
-            "});",
-            "super.initState();",
-            " }"
-        ],
-        "description": "se crea un init state con un future delayed dentro"
+        "prefix": "future"
     },
     "Generate a Future Delayed": {
-        "prefix": "fdelayed",
         "body": [
             "Future.delayed(Duration.zero,(){",
             "",
             "});"
         ],
-        "description": "Inserta un future delayed con duration en zero"
+        "description": "Inserta un future delayed con duration en zero",
+        "prefix": "fdelayed"
     },
     "Generate a RichText": {
-        "prefix": "richText",
         "body": [
             "RichText(",
             "text: TextSpan(",
@@ -76,27 +65,136 @@
             " ),",
             " ),"
         ],
-        "description": "Inserta un widget tipo RichText"
+        "description": "Inserta un widget tipo RichText",
+        "prefix": "richText"
     },
     "Generate a User provider": {
-        "prefix": "userprovider",
         "body": [
             "User user = Provider.of<UserProvider>(context, listen: false).$0;"
         ],
-        "description": "Retorna un la instancia de un objeto tipo user desde un user provider"
+        "description": "Retorna un la instancia de un objeto tipo user desde un user provider",
+        "prefix": "userprovider"
     },
-    "Generate a provider instance": {
-        "prefix": "providerOf",
+    "Generate a floating action button": {
         "body": [
-            "Provider.of<${1:MyType}>(context)$0"
+            "floatingActionButton: FloatingActionButton(",
+            "child: Icon(Icons.add),",
+            "onPressed: () {}",
+            "),"
         ],
-        "description": "Obtiene una instancia de un provider"
+        "prefix": "fab"
     },
     "Generate a provider (no listener) instance": {
-        "prefix": "providerOfFalse",
         "body": [
             "Provider.of<${1:MyType}>(context, listen: false)$0"
         ],
-        "description": "Obtiene una instancia de un provider listen changes"
+        "description": "Obtiene una instancia de un provider listen changes",
+        "prefix": "providerOfFalse"
+    },
+    "Generate a provider instance": {
+        "body": [
+            "Provider.of<${1:MyType}>(context)$0"
+        ],
+        "description": "Obtiene una instancia de un provider",
+        "prefix": "providerOf"
+    },
+    "Get Named Routes arguments": {
+        "body": [
+            "dynamic args = ModalRoute.of(context).settings.arguments;",
+            "print(args);"
+        ],
+        "description": "se obtienen los argumentos pasados mediante route params y se asignan a una variable dinamica",
+        "prefix": "args"
+    },
+    "Init State + Future Delayed": {
+        "body": [
+            "@override",
+            "void initState() {",
+            "super.initState();",
+            "Future.delayed(Duration.zero, () {",
+            "",
+            "});",
+            " }"
+        ],
+        "description": "se crea un init state con un future delayed dentro",
+        "prefix": "initstate"
+    },
+    "Insert Material": {
+        "body": [
+            "import 'package:flutter/material.dart';"
+        ],
+        "description": "insertar import de material",
+        "prefix": "insertm"
+    },
+    "Insert Tools": {
+        "body": [
+            "import '../../tools/tools.dart';"
+        ],
+        "description": "insertar tools",
+        "prefix": "inserte"
+    },
+    "Layout builder": {
+        "body": [
+            "LayoutBuilder(",
+            "  builder: (BuildContext context, BoxConstraints constraints) {},",
+            "),"
+        ],
+        "prefix": "layoutbuilder"
+    },
+    "List sin tipo": {
+        "body": [
+            "List<>"
+        ],
+        "prefix": "list"
+    },
+    "MVCController context": {
+        "body": [
+            "con.stateMVC!.context"
+        ],
+        "prefix": "con."
+    },
+    "Map String dynamic": {
+        "body": [
+            "Map<String, dynamic>"
+        ],
+        "prefix": "maps"
+    },
+    "Map sin tipo": {
+        "body": [
+            "Map<>"
+        ],
+        "prefix": "map"
+    },
+    "Mayor y menor que": {
+        "body": [
+            "<>"
+        ],
+        "prefix": "°|"
+    },
+    "New Repository": {
+        "body": [
+            "import 'package:flutter_riverpod/flutter_riverpod.dart';",
+            "import 'package:http/http.dart' as http;",
+            "class ${1:}Repository {",
+            "/// Se agrega el http client cómo parameto para",
+            "/// poder mockearlo en unit testing facilmente",
+            "final http.Client client;",
+            "",
+            "${1:}Repository({required this.client});",
+            "}",
+            "",
+            "final ${1:}RepositoryProvider = Provider<${1:}Repository>(",
+            "  (ref) => ${1:}Repository(client: http.Client()),",
+            ");"
+        ],
+        "prefix": "repository"
+    },
+    "Scroll Configuration": {
+        "body": [
+            "ScrollConfiguration(",
+            "behavior: ScrollConfiguration.of(context)",
+            ".copyWith(scrollbars: false),"
+        ],
+        "prefix": "ScrollConfiguration"
     }
 }
